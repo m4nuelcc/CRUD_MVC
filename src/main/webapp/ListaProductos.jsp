@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
-<!--   importamos libreria java util y todas las clases del paquete productos -->
+<!-- IMPORTAMOS LAS LIBRERIAS DE CORE -->
 
-<%@ page import="java.util.*, com.manu.productos.*"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
 <!DOCTYPE html>
@@ -13,25 +13,25 @@
 <title>Insert title here</title>
 
 <style type="text/css">
+.cabecera {
+	font-size: 1.2em;
+	font-weight: bold;
+	background-color:  #2980b9;
+	color: white;
+}
 
-	.cabecera{
-		
-		border-bottom: solid #F00 1px;
-	}
-
+.filas {
+	background-color:  #5dade2 ;
+	
+}
 </style>
 </head>
 
 
-<%
-//obtiene los productos del controlador (servlets)
-
-List<Productos> losProductos = (List<Productos>) request.getAttribute("LISTAPRODUCTOS");
-%>
 <body>
-	<div>
+	<div align="center">
 
-		<table border="1">
+		<table border="0">
 			<tr>
 				<th class="cabecera">CODIGO</th>
 				<th class="cabecera">SECCION</th>
@@ -40,24 +40,25 @@ List<Productos> losProductos = (List<Productos>) request.getAttribute("LISTAPROD
 				<th class="cabecera">FECHA</th>
 				<th class="cabecera">IMPORTADO</th>
 				<th class="cabecera">PAIS</th>
+
 			</tr>
-			
-			<% for(Productos produc: losProductos){ %>
-				
+
+			<c:forEach var="produc" items="${LISTAPRODUCTOS}">
+
 				<tr>
-					<td><%=produc.getcArt() %></td>
-					<td><%=produc.getSeccion() %></td>
-					<td><%=produc.getnArt() %></td>
-					<td><%=produc.getPrecio() %></td>
-					<td><%=produc.getFecha() %></td>
-					<td><%=produc.getImportado() %></td>
-					<td><%=produc.getpOring() %></td>
-				
-				
-				
+					<td class="filas">${produc.cArt}</td>
+					<td class="filas">${produc.seccion}</td>
+					<td class="filas">${produc.nArt}</td>
+					<td class="filas">${produc.precio}</td>
+					<td class="filas">${produc.fecha}</td>
+					<td class="filas">${produc.importado}</td>
+					<td class="filas">${produc.pOring}</td>
+
+
 				</tr>
-			
-			<%} %>
+
+			</c:forEach>
+
 		</table>
 
 	</div>

@@ -47,7 +47,7 @@ public class ServletsPruebas extends HttpServlet {
 
 		PrintWriter salida = response.getWriter();
 
-		response.setContentType("text/plain");
+		response.setContentType("text/html");
 
 		// Crear conexión con BBDD
 		
@@ -78,7 +78,7 @@ public class ServletsPruebas extends HttpServlet {
 				//String nombre = miResulset.getNString(3);
 				
 				
-				salida.println(miResulset.getNString(2)+ "   " + miResulset.getNString(3) +"   " + miResulset.getDouble(4)+ "   " + miResulset.getNString(6));
+				salida.println(miResulset.getNString(2)+ "   " + miResulset.getNString(3) +"   " + miResulset.getDouble(4)+ "   " + miResulset.getNString(6)+"<br>");
 				salida.println("");
 				
 				
