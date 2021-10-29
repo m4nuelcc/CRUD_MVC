@@ -16,9 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-
-
-
 /**
  * Servlet implementation class ControladorProductos
  */
@@ -67,93 +64,82 @@ public class ControladorProductos extends HttpServlet {
 
 		String elcomando = request.getParameter("instruccion");
 
-		System.out.println("al arrancar "+elcomando);
-
 		// Sino se envia el parametro, listar productos
 
-		if (elcomando==null) elcomando = "listar";
+		if (elcomando == null)
+			elcomando = "listar";
 
 		// Redirigir el flujo de ejecucion al mentodo adecuado
 
 		switch (elcomando) {
 
 		case "listar":
-			
-			System.out.println("case listar " + elcomando);
-			
+
 			listarProductos(request, response);
 
 			break;
 
 		case "insertarBBDD":
-		
-			System.out.println("case insertar "+ elcomando);
-			
-			agregarProducto(request,response);
-			
+
+			agregarProducto(request, response);
+
 			break;
 
 		default:
 
-			System.out.println("default " + elcomando);
-			
 			listarProductos(request, response);
 
 			break;
 
 		}
 
-	
-
 	}
 
-	//------------------------METODO PARA AGREGAR PRODUCTOS------------------------------
+	// ------------------------METODO PARA AGREGAR
+	// PRODUCTOS------------------------------
 	private void agregarProducto(HttpServletRequest request, HttpServletResponse response) {
-		
-	
-		
-		//leer la informacion del producto que viene en el formulario
-		
+
+		// leer la informacion del producto que viene en el formulario
+
 		String Cart = request.getParameter("Cart");
-		
+
 		String seccion = request.getParameter("seccion");
-		
+
 		String Nart = request.getParameter("Nart");
-		
+
 		Double precio = Double.parseDouble(request.getParameter("precio"));
-		
+
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
-		Date fecha=null;
-		
+		Date fecha = null;
+
 		try {
-			fecha = formatoFecha.parse( request.getParameter("fecha"));
+			fecha = formatoFecha.parse(request.getParameter("fecha"));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String importado = request.getParameter("importado");
-		
+
 		String pOrigen = request.getParameter("pOrigen");
-		
-	
+
 		// crear un objeto de tipo producto
-		
-		Productos nuevoProducto = new Productos(Cart, seccion, Nart, precio, fecha, importado,pOrigen);
-		
+
+		Productos nuevoProducto = new Productos(Cart, seccion, Nart, precio, fecha, importado, pOrigen);
+
 		// Enviar el objeto al modelo y despues insertar el objeto en la BBDD
-		
+
 		modeloProductos.agregarElNuevoProducto(nuevoProducto);
-		
+
 		// volver a listar la lista de productos
-		
+
 		listarProductos(request, response);
-		System.out.println("Codigo artiuculo "+Cart);
+
 	}
 
-	
-	//-----------------------------METODO QUE LISTA PRODUCTOS----------------------------------
+	// -----------------------------METODO QUE LISTA
+	// PRODUCTOS----------------------------------
 	private void listarProductos(HttpServletRequest request, HttpServletResponse response) {
 
 		// Obetener la lista de productos desde el modelo
