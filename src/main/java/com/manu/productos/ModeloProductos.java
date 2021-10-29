@@ -62,5 +62,11 @@ public class ModeloProductos {
 		}
 
 		return productos;
+	}
+
+	public void agregarElNuevoProducto(Productos nuevoProducto) {
+	
+		
+		
 	};
 }

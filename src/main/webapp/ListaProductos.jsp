@@ -11,27 +11,38 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<!-- ---------------------------------ESTILO DE LA WEB----------------------------------->
 
 <style type="text/css">
 .cabecera {
 	font-size: 1.2em;
 	font-weight: bold;
-	background-color:  #2980b9;
+	background-color: #2980b9;
 	color: white;
 }
 
 .filas {
-	background-color:  #5dade2 ;
-	
+	background-color: #5dade2;
+}
+
+table {
+	float: left;
+}
+
+#ContenedorBoton {
+	margin-left: 10px;
+
 }
 </style>
+
+<!-- --------------------------------------------------------------------------------- -->
+
 </head>
 
-
 <body>
-	<div align="center">
+	<div>
 
-		<table border="0">
+		<table>
 			<tr>
 				<th class="cabecera">CODIGO</th>
 				<th class="cabecera">SECCION</th>
@@ -61,6 +72,10 @@
 
 		</table>
 
+	</div>
+	<div id="ContenedorBoton">
+
+		<input type="button" value="Insertar Registro"  onclick="window.location.href='inserta_producto.jsp'"/>
 	</div>
 </body>
 </html>
