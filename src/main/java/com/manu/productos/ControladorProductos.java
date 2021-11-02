@@ -95,8 +95,7 @@ public class ControladorProductos extends HttpServlet {
 
 	}
 
-	// ------------------------METODO PARA AGREGAR
-	// PRODUCTOS------------------------------
+	// ----------------METODO PARA AGREGAR PRODUCTOS----------------------------
 	private void agregarProducto(HttpServletRequest request, HttpServletResponse response) {
 
 		// leer la informacion del producto que viene en el formulario
@@ -104,7 +103,7 @@ public class ControladorProductos extends HttpServlet {
 		String Cart = request.getParameter("Cart");
 
 		String seccion = request.getParameter("seccion");
-
+		
 		String Nart = request.getParameter("Nart");
 
 		Double precio = Double.parseDouble(request.getParameter("precio"));
@@ -130,7 +129,12 @@ public class ControladorProductos extends HttpServlet {
 
 		// Enviar el objeto al modelo y despues insertar el objeto en la BBDD
 
-		modeloProductos.agregarElNuevoProducto(nuevoProducto);
+		try {
+			modeloProductos.agregarElNuevoProducto(nuevoProducto);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// volver a listar la lista de productos
 
@@ -138,8 +142,7 @@ public class ControladorProductos extends HttpServlet {
 
 	}
 
-	// -----------------------------METODO QUE LISTA
-	// PRODUCTOS----------------------------------
+	// ------------------------METODO QUE LISTA PRODUCTOS---------------------------
 	private void listarProductos(HttpServletRequest request, HttpServletResponse response) {
 
 		// Obetener la lista de productos desde el modelo

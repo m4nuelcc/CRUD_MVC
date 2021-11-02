@@ -39,7 +39,7 @@
 					<tr>
 						<td width="37%">Sección</td>
 						<td width="73%"><label for="seccion"></label> <input
-							type="text" name=" " id="seccion">
+							type="text" name="seccion" id="seccion">
 					</tr>
 
 					<tr>
