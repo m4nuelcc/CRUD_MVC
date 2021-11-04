@@ -31,7 +31,6 @@ table {
 
 #ContenedorBoton {
 	margin-left: 10px;
-
 }
 </style>
 
@@ -41,7 +40,7 @@ table {
 
 <body>
 	<div>
-
+		<h1 align="center">LISTA DE PRODUCTOS </h1>
 		<table>
 			<tr>
 				<th class="cabecera">CODIGO</th>
@@ -51,10 +50,22 @@ table {
 				<th class="cabecera">FECHA</th>
 				<th class="cabecera">IMPORTADO</th>
 				<th class="cabecera">PAIS</th>
+				<th class="cabecera">ACCIÓN</th>
 
 			</tr>
 
 			<c:forEach var="produc" items="${LISTAPRODUCTOS}">
+
+				<!-- LINK PARA CADA PRODUCTO CON SU CAMPO CLAVE	 -->
+
+				<c:url var="LinkTemp" value="ControladorProductos">
+
+					<c:param name="instruccion" value="cargar"></c:param>
+					<c:param name="CArticulo" value="${produc.cArt}"></c:param>
+
+				</c:url>
+				
+				<!-------------------------------------------- -->
 
 				<tr>
 					<td class="filas">${produc.cArt}</td>
@@ -64,6 +75,7 @@ table {
 					<td class="filas">${produc.fecha}</td>
 					<td class="filas">${produc.importado}</td>
 					<td class="filas">${produc.pOring}</td>
+					<td class="filas"><A HREF="${LinkTemp}">ACTUZALIZAR </A> <A HREF="${LinkBorrar}">BORRAR </A> </td>
 
 
 				</tr>
@@ -75,7 +87,8 @@ table {
 	</div>
 	<div id="ContenedorBoton">
 
-		<input type="button" value="Insertar Registro"  onclick="window.location.href='inserta_producto.jsp'"/>
+		<input type="button" value="Insertar Registro"
+			onclick="window.location.href='inserta_producto.jsp'" />
 	</div>
 </body>
 </html>

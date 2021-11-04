@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import javax.swing.JOptionPane;
+
+
 
 /**
  * Servlet implementation class ControladorProductos
@@ -60,6 +63,9 @@ public class ControladorProductos extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		 int cont=1;
+		
+		
 		// Leer el parametro del formulario
 
 		String elcomando = request.getParameter("instruccion");
@@ -75,19 +81,57 @@ public class ControladorProductos extends HttpServlet {
 
 		case "listar":
 
-			listarProductos(request, response);
+			try {
+				listarProductos(request, response);
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 
 			break;
 
 		case "insertarBBDD":
 
-			agregarProducto(request, response);
+			try {
+				agregarProducto(request, response);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			break;
+
+		case "cargar":
+
+			try {
+				cargarProducto(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		case "actualizarBBDD":
+
+			try {
+				
+				System.out.println(cont++);
+				actualizaProductos(request, response);
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			break;
 
 		default:
 
-			listarProductos(request, response);
+			try {
+				listarProductos(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			break;
 
@@ -95,15 +139,94 @@ public class ControladorProductos extends HttpServlet {
 
 	}
 
+	private void actualizaProductos(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		Productos productoActualizado=null;
+		
+		
+		System.out.println("actualizar productos llegaaaaaa");
+		
+		//Obtener los datos del formulario actuzaliza.jsp
+		
+		String Cart = request.getParameter("Cart");
+
+		String seccion = request.getParameter("seccion");
+
+		String Nart = request.getParameter("Nart");
+
+		Double precio = Double.parseDouble(request.getParameter("precio"));
+
+		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+
+		Date fecha = null;
+
+		try {
+			fecha = formatoFecha.parse(request.getParameter("fecha"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String importado = request.getParameter("importado");
+
+		String pOrigen = request.getParameter("pOrigen");
+		
+		//Empaquetarlos en un objeto Producto
+		
+		productoActualizado = new Productos(Cart, seccion, Nart, precio, fecha, importado, pOrigen);
+		
+		//enviarlo al Modeloproductos para actualizar la BBDD			
+		
+		modeloProductos.actualizarProducto(productoActualizado);
+		
+		// volver al listado
+		
+		listarProductos(request, response);
+		
+		
+
+	}
+
+//--------------------METODO PARA MOSTAR LOS DATOS QUE HEMOS SELECCIONADO DE LA LISTA--------
+	
+	private void cargarProducto(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		Productos elProducto = null;
+		
+		// leer el codigo articulo que viene del listado (jsp)
+
+		String codigoArticulo = request.getParameter("CArticulo");
+
+		// Enviar codigo articulo a modeloProductos
+		
+//		Productos elProducto = modeloProductos.getProducto(codigoArticulo);
+
+		elProducto = modeloProductos.getProducto(codigoArticulo);
+
+		System.out.println(elProducto.toString());
+
+		// colocar artributo correspondiente al codigo articulo
+
+		request.setAttribute("ACTICULO_ACTUALIZADO", elProducto);
+
+		// enviar producto al formulario de actualizar (jsp)
+
+		RequestDispatcher miDisp = request.getRequestDispatcher("/actualizaProducto.jsp");
+
+		miDisp.forward(request, response);
+
+	}
+
 	// ----------------METODO PARA AGREGAR PRODUCTOS----------------------------
-	private void agregarProducto(HttpServletRequest request, HttpServletResponse response) {
+	
+	private void agregarProducto(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// leer la informacion del producto que viene en el formulario
 
 		String Cart = request.getParameter("Cart");
 
 		String seccion = request.getParameter("seccion");
-		
+
 		String Nart = request.getParameter("Nart");
 
 		Double precio = Double.parseDouble(request.getParameter("precio"));
@@ -143,7 +266,8 @@ public class ControladorProductos extends HttpServlet {
 	}
 
 	// ------------------------METODO QUE LISTA PRODUCTOS---------------------------
-	private void listarProductos(HttpServletRequest request, HttpServletResponse response) {
+	
+	private void listarProductos(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// Obetener la lista de productos desde el modelo
 
