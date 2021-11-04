@@ -23,6 +23,8 @@ public class ModeloProductos {
 	// Metodo que nos proporciona una lista con la consulta sql
 
 	public List<Productos> getProductos() throws Exception {
+		
+		System.out.println("----------" + "METODO GETPRODUCTOS MODELO" + "---------------");
 
 		List<Productos> productos = new ArrayList<>();
 
@@ -78,6 +80,8 @@ public class ModeloProductos {
 	}
 
 	public void agregarElNuevoProducto(Productos nuevoProducto) throws Exception {
+		
+		System.out.println("----------" + "METODO AGREGAR MODELO" + "---------------");
 
 		// Obtener la conexion
 
@@ -140,6 +144,8 @@ public class ModeloProductos {
 	}
 
 	public Productos getProducto(String codigoArticulo) {
+		
+		System.out.println("----------" + "METODO GETPRODUCTO MODELO" + "---------------");
 
 		Productos elproducto = null;
 
@@ -212,6 +218,8 @@ public class ModeloProductos {
 	// Actuzaliza un producto de la BBDD
 
 	public void actualizarProducto(Productos productoActualizado) {
+		
+		System.out.println("----------" + "METODO ACTUAZLIARPRODUCTOS MODELO" + "---------------");
 
 		Connection miConexion = null;
 
@@ -261,6 +269,43 @@ public class ModeloProductos {
 			e.printStackTrace();
 		} 
 
+	}
+
+	public void borrarProducto(String cart) throws Exception {
+		
+		
+		System.out.println("----------" + "METODO BORRAR MODELO" + "---------------");
+		
+		System.out.println(cart);
+		Connection miConexion = null;
+
+		PreparedStatement miPreparament = null;
+		
+		
+		//Establecer la conexion con la BBDD
+		
+		miConexion= origenDatos.getConnection();
+		
+		// Crear la instruccion SQL de eleminiacion
+		
+		String SQL ="DELETE FROM Productos WHERE CODIGOARTICULO=?";
+		
+		System.out.println(SQL);
+		// Preparar la consulta
+		
+		miPreparament = miConexion.prepareStatement(SQL);
+		
+		
+		//Establecer los prarametros de consulta
+		
+		miPreparament.setString(1, cart);
+		
+		// Ejecutar la consulta
+		
+		miPreparament.execute();
+		
+		System.out.println("Borrado Correctamente");
+		
 	};
 
 }

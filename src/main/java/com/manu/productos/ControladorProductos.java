@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.swing.JOptionPane;
 
-
-
 /**
  * Servlet implementation class ControladorProductos
  */
@@ -63,12 +61,11 @@ public class ControladorProductos extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		 int cont=1;
-		
-		
 		// Leer el parametro del formulario
 
 		String elcomando = request.getParameter("instruccion");
+
+		System.out.println("----------EL COMANDO " + elcomando + "---------------");
 
 		// Sino se envia el parametro, listar productos
 
@@ -109,14 +106,24 @@ public class ControladorProductos extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
+
+		case "borrar":
+
+			try {
+				borrarProducto(request, response);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			break;
 
 		case "actualizarBBDD":
 
 			try {
-				
-				System.out.println(cont++);
+
 				actualizaProductos(request, response);
-				
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -139,15 +146,34 @@ public class ControladorProductos extends HttpServlet {
 
 	}
 
+	private void borrarProducto(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		System.out.println("----------" + "METODO BORRAR CONTROLADOR" + "---------------");
+
+		// Campturar el codigo articulo
+
+		String Cart = request.getParameter("CArticuloBorrar");
+		
+		System.out.println("valor de codigo articulo en controlador: " + Cart);
+
+		// Borrar producto de la BBDD
+
+		modeloProductos.borrarProducto(Cart);
+
+		// Volver al listado de Productos
+
+		listarProductos(request, response);
+
+	}
+
 	private void actualizaProductos(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		Productos productoActualizado=null;
-		
-		
-		System.out.println("actualizar productos llegaaaaaa");
-		
-		//Obtener los datos del formulario actuzaliza.jsp
-		
+
+		Productos productoActualizado = null;
+
+		System.out.println("----------" + "METODO ACTUALIZAR CONTROLADOR" + "---------------");
+
+		// Obtener los datos del formulario actuzaliza.jsp
+
 		String Cart = request.getParameter("Cart");
 
 		String seccion = request.getParameter("seccion");
@@ -170,35 +196,38 @@ public class ControladorProductos extends HttpServlet {
 		String importado = request.getParameter("importado");
 
 		String pOrigen = request.getParameter("pOrigen");
-		
-		//Empaquetarlos en un objeto Producto
-		
+
+		// Empaquetarlos en un objeto Producto
+
 		productoActualizado = new Productos(Cart, seccion, Nart, precio, fecha, importado, pOrigen);
 		
-		//enviarlo al Modeloproductos para actualizar la BBDD			
-		
+		System.out.println("METODO  ACTUALIZAR: " + productoActualizado.toString());
+
+		// enviarlo al Modeloproductos para actualizar la BBDD
+
 		modeloProductos.actualizarProducto(productoActualizado);
-		
+
 		// volver al listado
-		
+
 		listarProductos(request, response);
-		
-		
 
 	}
 
 //--------------------METODO PARA MOSTAR LOS DATOS QUE HEMOS SELECCIONADO DE LA LISTA--------
 	
+
 	private void cargarProducto(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		System.out.println("----------" + "METODO CARGAR CONTROLADOR" + "---------------");
 
 		Productos elProducto = null;
-		
+
 		// leer el codigo articulo que viene del listado (jsp)
 
 		String codigoArticulo = request.getParameter("CArticulo");
 
 		// Enviar codigo articulo a modeloProductos
-		
+
 //		Productos elProducto = modeloProductos.getProducto(codigoArticulo);
 
 		elProducto = modeloProductos.getProducto(codigoArticulo);
@@ -218,8 +247,10 @@ public class ControladorProductos extends HttpServlet {
 	}
 
 	// ----------------METODO PARA AGREGAR PRODUCTOS----------------------------
-	
+
 	private void agregarProducto(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		System.out.println("----------" + "METODO AGREGAR CONTROLADOR" + "---------------");
 
 		// leer la informacion del producto que viene en el formulario
 
@@ -267,7 +298,10 @@ public class ControladorProductos extends HttpServlet {
 
 	// ------------------------METODO QUE LISTA PRODUCTOS---------------------------
 	
+
 	private void listarProductos(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		System.out.println("----------" + "METODO LISTAR CONTROLADOR" + "---------------");
 
 		// Obetener la lista de productos desde el modelo
 

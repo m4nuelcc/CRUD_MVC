@@ -65,6 +65,14 @@ table {
 
 				</c:url>
 				
+				<c:url var="LinkBorrar" value="ControladorProductos">
+
+					<c:param name="instruccion" value="borrar"></c:param>
+					<c:param name="CArticuloBorrar" value="${produc.cArt}"></c:param>
+
+				</c:url>
+				
+			
 				<!-------------------------------------------- -->
 
 				<tr>
@@ -75,7 +83,7 @@ table {
 					<td class="filas">${produc.fecha}</td>
 					<td class="filas">${produc.importado}</td>
 					<td class="filas">${produc.pOring}</td>
-					<td class="filas"><A HREF="${LinkTemp}">ACTUZALIZAR </A> <A HREF="${LinkBorrar}">BORRAR </A> </td>
+					<td class="filas"><a HREF="${LinkTemp}">ACTUZALIZAR </a>&nbsp;<a HREF="${LinkBorrar}">BORRAR </a> </td>
 
 
 				</tr>
